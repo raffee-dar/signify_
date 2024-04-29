@@ -1,0 +1,47 @@
+<!-- https://www.bmw.pl/pl/all-models.html -->
+
+<script>
+  (function () {
+    var addStickyNavItem = function () {
+      try {
+        let stickyNavUl = document.querySelector(
+          "#container-aae276af00 ul.cmp-contentnavigation__list.cmp-contentnavigation__list--cta"
+        );
+        let liHoverItem = stickyNavUl.querySelector("li").cloneNode(true);
+
+        liHoverItem
+          .querySelector("a")
+          .classList.remove("cmp-contentnavigation__list-link--cta-primary");
+        liHoverItem.querySelector("a").innerText = "Ladeerfahrungen ";
+        liHoverItem
+          .querySelector("a")
+          .setAttribute(
+            "href",
+            "/de/elektroauto/elektroauto-laden/charging-consultation-tool-full.html"
+          );
+        let icon = `<i class="cmp-globalnavigation__interaction-icon" data-icon="person" aria-hidden="true"></i>`;
+        liHoverItem.insertAdjacentHTML("afterbegin", icon);
+
+        let teaserBtn = document.querySelector("#button-b8dee06138");
+        liHoverItem.addEventListener("click", function (e) {
+          e.preventDefault();
+          setTimeout(() => {
+            if (teaserBtn) teaserBtn.click();
+            else console.log("button not available.");
+          }, 200);
+        });
+
+        stickyNavUl.insertBefore(liHoverItem, stickyNavUl.firstChild);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    setTimeout(() => {
+      document.querySelector("#online-ladeberatung").scrollIntoView();
+
+      // document.querySelector("#online-ladeberatung").scrollIntoView();
+      addStickyNavItem();
+    }, 200);
+  })();
+</script>

@@ -1,0 +1,88 @@
+<!-- https://www.bmw.it/it/gamma.html -->
+
+<script type="text/javascript">
+  (function (w, d) {
+    var logInfo = function (str) {
+      console.info(str);
+    };
+
+    var changeICP = function (ulElem) {
+      var CTA = ulElem.querySelectorAll(
+        ".cmp-modelselection__detail-view--link"
+      );
+
+      if (CTA) {
+        CTA.forEach(function (element) {
+          if (element.href) {
+            var newHref = updateICP(element.href, "it_am_np");
+            element.setAttribute("href", newHref);
+          }
+        });
+      }
+    };
+
+    var updateICP = function (href, icpValue) {
+      if (href.indexOf("#") > -1) {
+        href = href.replace("#", "?" + "icp=" + icpValue + "#");
+      } else if (href.indexOf("&") > -1) {
+        href += "&" + "icp=" + icpValue;
+      } else {
+        href += (href.match(/\?/) ? "&" : "?") + "icp=" + icpValue;
+      }
+      return href;
+    };
+
+    var handleSuccessPrice = function (ulElem, priceSelector) {
+      var priceSelectorElem = document.querySelector(priceSelector);
+
+      if (priceSelectorElem) {
+        priceSelectorElem.remove();
+      }
+      changeICP(ulElem);
+    };
+
+    var findDetailViewByIdOpen = function () {
+      var detailViewElem = document.querySelector(
+        ".cmp-modelselection__detail-view"
+      );
+      if (detailViewElem) {
+        handleSuccessPrice(
+          detailViewElem,
+          ".cmp-modelselection__detail-view--price"
+        );
+      }
+    };
+
+    var changePageLoad = function () {
+      var modelCard = document.querySelectorAll(".cmp-modelcard");
+      modelCard.forEach(function (ele) {
+        handleSuccessPrice(ele, ".cmp-modelcard__price");
+      });
+    };
+
+    var observeChanges = function () {
+      findDetailViewByIdOpen();
+      changePageLoad();
+
+      var observer = new MutationObserver(function (mutationsList) {
+        mutationsList.forEach(function (mutation) {
+          mutation.addedNodes.forEach(function (addedNode) {
+            if (
+              addedNode.classList &&
+              addedNode.classList.contains("cmp-modelselection__detail-view")
+            ) {
+              handleSuccessPrice(
+                addedNode,
+                ".cmp-modelselection__detail-view--price"
+              );
+            }
+          });
+        });
+      });
+
+      observer.observe(d, { childList: true, subtree: true });
+    };
+
+    observeChanges();
+  })(window, document);
+</script>

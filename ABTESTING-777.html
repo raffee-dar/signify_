@@ -1,0 +1,60 @@
+<script>
+  // Create an img element
+
+  let picElm = `<picture><source srcset="https://bmw.scene7.com/is/image/BMW/DI23_000136501:3to2?fmt=webp&amp;wid=2560&amp;hei=1707" media="(min-width: 1504px) " type="image/webp" width="2560" height="1707"><source srcset="https://bmw.scene7.com/is/image/BMW/DI23_000136501:3to2?fmt=webp&amp;wid=1504&amp;hei=1003" media="(min-width: 1024px) " type="image/webp" width="1504" height="1003"><source type="image/webp" width="600" height="400"><img class="cmp-image__image" alt="" width="4000" height="4000"></picture>`;
+
+  // Find the video element within the DOM structure
+  let videoElement = document.querySelector(
+    '#Stage div[data-component-path="backgroundmedia-v2"] video'
+  );
+
+  // Replace the video element with the img element
+  if (videoElement) {
+    // Get the parent of the video element
+    let parentElement = videoElement.parentElement;
+    // Replace the video element with the img element
+    parentElement.replaceChild(picElm, videoElement);
+  } else {
+    console.error("Video or image element not found");
+  }
+
+  //   let parentElement = document.querySelector(
+  //     '#Stage div[data-component-path="backgroundmedia-v2"]'
+  //   );
+
+  //   let videoElement = parentElement.querySelector("video");
+  //   if (videoElement) {
+  //     videoElement.remove();
+  //   }
+
+  //   parentElement.style.backgroundImage =
+  //     'url("https://bmw.scene7.com/is/image/BMW/emob_bev_stage_range_dsk_sl?qlt=80&wid=1024&fmt=webp")';
+  //   parentElement.style.backgroundSize = "cover"; // Optional: Adjust the background size as needed
+
+  // Define the picElm string containing the picture element markup
+  let picElm = `<picture><source srcset="https://bmw.scene7.com/is/image/BMW/DI23_000136501:3to2?fmt=webp&amp;wid=2560&amp;hei=1707" media="(min-width: 1504px) " type="image/webp" width="2560" height="1707"><source srcset="https://bmw.scene7.com/is/image/BMW/DI23_000136501:3to2?fmt=webp&amp;wid=1504&amp;hei=1003" media="(min-width: 1024px) " type="image/webp" width="1504" height="1003"><source type="image/webp" width="600" height="400"><img class="cmp-image__image" alt="" width="4000" height="4000"></picture>`;
+
+  // Create a temporary div element
+  let tempDiv = document.createElement("div");
+
+  // Set the innerHTML of the temporary div to the picElm string
+  tempDiv.innerHTML = picElm;
+
+  // Extract the first child node from the temporary div, which is the picture element
+  let pictureElement = tempDiv.firstChild;
+
+  // Find the video element within the DOM structure
+  let videoElement = document.querySelector(
+    '#Stage div[data-component-path="backgroundmedia-v2"] video'
+  );
+
+  // Replace the video element with the picture element
+  if (videoElement && pictureElement) {
+    // Get the parent of the video element
+    let parentElement = videoElement.parentElement;
+    // Replace the video element with the picture element
+    parentElement.replaceChild(pictureElement, videoElement);
+  } else {
+    console.error("Video or image element not found");
+  }
+</script>

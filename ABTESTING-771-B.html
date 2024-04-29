@@ -1,0 +1,36 @@
+<!-- https://www.bmw.pl/pl/all-models.html -->
+
+<script>
+  (function () {
+    try {
+      let ofertyTab = document.querySelector(
+        '.cmp-contentnavigation__list-link[data-anchor="#oferty"]'
+      );
+      let ofertyGroup = document.querySelector(
+        '.cmp-modelselection__group.cmp-anchor[data-group-name="OFERTY"]'
+      );
+      let selectedValueElement = document.querySelector(
+        ".cmp-contentnavigation__selected-value"
+      );
+
+      if (ofertyTab && ofertyGroup && selectedValueElement) {
+        var style = document.createElement("style");
+        var css = `
+            .hidden {
+                display: none !important;
+            }`;
+
+        style.textContent = css;
+        document.head.appendChild(style);
+
+        ofertyTab.parentElement.classList.add("hidden");
+        ofertyGroup.classList.add("hidden");
+
+        // Update the text content of the selected value element
+        selectedValueElement.textContent = "BMW i";
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  })();
+</script>

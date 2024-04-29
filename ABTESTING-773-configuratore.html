@@ -1,0 +1,73 @@
+<!-- https://www.bmw.it/it/configuratore.html -->
+
+<script type="text/javascript">
+  (function (w, d) {
+    var logInfo = function (str) {
+      console.info(str);
+    };
+
+    var changeICP = function (ulElem) {
+      var CTA = ulElem.querySelectorAll(".cmp-modelcard__con-link");
+      CTA.forEach(function (element) {
+        if (element.href) {
+          var newHref = updateICP(element.href, "it_am_np");
+          element.setAttribute("href", newHref);
+        }
+      });
+    };
+
+    var updateICP = function (href, icpValue) {
+      if (href.indexOf("#") > -1) {
+        href = href.replace("#", "?" + "icp=" + icpValue + "#");
+      } else if (href.indexOf("&") > -1) {
+        href += "&" + "icp=" + icpValue;
+      } else {
+        href += (href.match(/\?/) ? "&" : "?") + "icp=" + icpValue;
+      }
+      return href;
+    };
+
+    var handleSuccessPrice = function (ulElem, priceSelector) {
+      var priceSelector = document.querySelector(priceSelector);
+
+      if (priceSelector) {
+        priceSelector.remove();
+      }
+      changeICP(ulElem);
+    };
+
+    var findDetailViewByIdOpen = function () {
+      //changes happening on pageload if product detail is opened
+
+      var detailViewElem = document.querySelector(
+        ".cmp-modelselection__detail-view"
+      );
+      if (detailViewElem) {
+        handleSuccessPrice(
+          detailViewElem,
+          ".cmp-modelselection__detail-view--price"
+        );
+      }
+    };
+
+    var changePageLoad = function () {
+      //changes happening on pageload
+
+      var modelCard = document.querySelectorAll(".cmp-modelcard");
+
+      modelCard.forEach(function (ele) {
+        handleSuccessPrice(ele, ".cmp-modelcard__price");
+      });
+    };
+
+    var observeChanges = function () {
+      //Main function triggering all functions
+
+      findDetailViewByIdOpen(); //functions to be fired on Pageload, without need for observing changes
+      changePageLoad(); //functions to be fired on Pageload, without need for observing changes
+      //arrayUpdateWithId();
+    };
+
+    observeChanges();
+  })(window, document);
+</script>

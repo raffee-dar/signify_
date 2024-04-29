@@ -1,0 +1,100 @@
+<!-- https://www.bmw.pl/pl/all-models.html -->
+<script type="text/javascript">
+  (function (w, d) {
+    var logInfo = function (str) {
+      console.info(str);
+    };
+
+    var changeICP = function (ulElem) {
+      //update the icp only for OFERTY section
+      var currentURL = window.location.href;
+      var urlContainsOferty = currentURL.includes("OFERTY_");
+
+      if (urlContainsOferty) {
+        var CTA = ulElem.querySelectorAll(
+          ".cmp-modelselection__detail-view--link"
+        );
+        if (CTA) {
+          CTA.forEach(function (element) {
+            if (element.href) {
+              var newHref = updateICP(element.href, "pl_am_no");
+              element.setAttribute("href", newHref);
+            }
+          });
+        }
+      }
+    };
+
+    var updateICP = function (href, icpValue) {
+      var url = new URL(href);
+
+      // Check if the 'icp' parameter already exists with the specific value
+      var icpExistsWithValue = false;
+      url.searchParams.forEach(function (value, key) {
+        if (key === "icp" && value === icpValue) {
+          icpExistsWithValue = true;
+        }
+      });
+
+      if (icpExistsWithValue) {
+        // 'icp' parameter with specific value already exists
+        return href;
+      } else {
+        // 'icp' parameter does not exist or has a different value
+        var queryString = url.search;
+        if (queryString.indexOf("?") === -1) {
+          // No query string exists, so add the 'icp' parameter
+          queryString = "?icp=" + icpValue;
+        } else {
+          // Query string exists, so append or modify the 'icp' parameter
+          queryString += queryString.indexOf("&") !== -1 ? "&" : "";
+          queryString += "icp=" + icpValue;
+        }
+
+        return url.origin + url.pathname + queryString + url.hash;
+      }
+    };
+
+    var findDetailViewByIdOpen = function () {
+      var detailViewElem = document.querySelector(
+        ".cmp-modelselection__detail-view"
+      );
+      if (detailViewElem) {
+        changeICP(detailViewElem);
+      }
+    };
+
+    var changePageLoad = function () {
+      var modelCard = document.querySelectorAll(".cmp-modelcard");
+      modelCard.forEach(function (ele) {
+        changeICP(ele);
+      });
+    };
+
+    var observeChanges = function () {
+      findDetailViewByIdOpen();
+      changePageLoad();
+
+      var observer = new MutationObserver(function (mutationsList) {
+        mutationsList.forEach(function (mutation) {
+          mutation.addedNodes.forEach(function (addedNode) {
+            if (
+              addedNode.classList &&
+              addedNode.classList.contains("cmp-modelselection__detail-view")
+            ) {
+              changeICP(addedNode);
+            }
+          });
+        });
+      });
+
+      observer.observe(d, {
+        childList: true,
+        subtree: true,
+      });
+      //}
+    };
+
+    observeChanges();
+  })(window, document);
+</script>
