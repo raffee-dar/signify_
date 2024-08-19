@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conversion Rate Uplift Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e9ecef;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2em;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      #output {
+        margin-top: 20px;
+        font-size: 1.1em;
+        line-height: 1.6;
+      }
+
+      .output-item {
+        background-color: #f8f9fa;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-left: 5px solid #007bff;
+        border-radius: 5px;
+      }
+
+      .output-item h2 {
+        font-size: 1.5em;
+        margin-top: 0;
+        color: #495057;
+      }
+
+      .output-item p {
+        margin: 0;
+        color: #6c757d;
+      }
+    </style>
+
+    <script src="./script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Conversion Rate Uplift Calculator</h1>
+      <input type="file" id="fileInput" accept=".csv" />
+      <div id="output"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
